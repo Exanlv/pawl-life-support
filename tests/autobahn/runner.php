@@ -1,13 +1,15 @@
 <?php
+
+use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use React\Promise\Deferred;
 
     require __DIR__ . '/../../vendor/autoload.php';
 
-    define('AGENT', 'Pawl/0.4');
+    define('AGENT', 'pawl/0.4');
 
     $connFactory = function() {
-        $connector = new Ratchet\Client\Connector();
+        $connector = new Connector();
 
         return function($url) use ($connector) {
             return $connector('ws://127.0.0.1:9001' . $url);
@@ -38,12 +40,14 @@ use React\Promise\Deferred;
                 $i++;
 
                 if ($i > (int)$numOfCases->getPayload()) {
-                    $allCases->resolve();
+                    $allCases->resolve(null);
 
                     return;
                 }
 
-                echo ".";
+                if ($i % 25 === 0) {
+                    echo $i, '/', (int)$numOfCases->getPayload(), PHP_EOL;
+                }
 
                 $connector("/runCase?case={$i}&agent=" . AGENT)->then(function(WebSocket $conn) use ($runNextCase) {
                     $conn->on('message', function($msg, $conn) {

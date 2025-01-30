@@ -1,11 +1,11 @@
-name: CI
+name: Autobahn
 
 on:
   pull_request:
 
 jobs:
-  PHPUnit:
-    name: PHPUnit (PHP ${{ matrix.php }})
+  Autobahn:
+    name: Autobahn Tests (PHP ${{ matrix.php }})
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -19,9 +19,11 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug
+      - run: ./run-docker.sh &
+        working-directory: ./tests/autobahn
+      - run: sleep 20
       - run: composer install
-      - run: vendor/bin/phpunit --coverage-text
-        if: ${{ matrix.php >= 7.3 }}
-      - run: vendor/bin/phpunit --coverage-text -c phpunit.xml.legacy
-        if: ${{ matrix.php < 7.3 }}
+      - run: php runner.php
+        working-directory: ./tests/autobahn
+      - run: php validate.php
+        working-directory: ./tests/autobahn
