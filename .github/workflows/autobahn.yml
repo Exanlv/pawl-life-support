@@ -20,7 +20,7 @@ jobs:
           php-version: ${{ matrix.php }}
       - run: ./run-docker.sh &
         working-directory: ./tests/autobahn
-      - run: sleep 10
+      - run: sleep 20
       - run: composer install
       - run: php runner.php
         working-directory: ./tests/autobahn
