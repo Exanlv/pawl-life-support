@@ -6,7 +6,7 @@ use React\Promise\Deferred;
 
     require __DIR__ . '/../../vendor/autoload.php';
 
-    define('AGENT', 'ragnarok-ws/0.4');
+    define('AGENT', 'pawl/0.4');
 
     $connFactory = function() {
         $connector = new Connector();
