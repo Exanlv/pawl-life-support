@@ -1,5 +1,7 @@
 <?php
 namespace Ratchet\Client;
+
+use AllowDynamicProperties;
 use Ratchet\RFC6455\Handshake\ClientNegotiator;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
@@ -10,12 +12,13 @@ use React\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7 as gPsr;
 
+#[AllowDynamicProperties]
 class Connector {
     protected $_loop;
     protected $_connector;
     protected $_negotiator;
 
-    public function __construct(LoopInterface $loop = null, ConnectorInterface $connector = null) {
+    public function __construct(?LoopInterface $loop = null, ?ConnectorInterface $connector = null) {
         $this->_loop = $loop ?: Loop::get();
 
         if (null === $connector) {

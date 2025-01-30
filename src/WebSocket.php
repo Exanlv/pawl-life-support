@@ -1,5 +1,7 @@
 <?php
 namespace Ratchet\Client;
+
+use AllowDynamicProperties;
 use Evenement\EventEmitterTrait;
 use Evenement\EventEmitterInterface;
 use React\Socket\ConnectionInterface;
@@ -11,6 +13,7 @@ use Ratchet\RFC6455\Messaging\MessageInterface;
 use Ratchet\RFC6455\Messaging\FrameInterface;
 use Ratchet\RFC6455\Messaging\Frame;
 
+#[AllowDynamicProperties]
 class WebSocket implements EventEmitterInterface {
     use EventEmitterTrait;
 
